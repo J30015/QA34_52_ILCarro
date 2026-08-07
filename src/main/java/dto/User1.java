@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 
 
-public class User {
+public class User1 {
     private String username;
     private String password;
 

@@ -1,6 +1,6 @@
 package pages;
 
-import dto.User;
+import dto.User1;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +19,7 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//button[@type='submit']")
     WebElement btnYalla;
 
-    public void typeLoginForm(User user){
+    public void typeLoginForm(User1 user){
         inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
 
