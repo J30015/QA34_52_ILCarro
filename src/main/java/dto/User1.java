@@ -13,6 +13,8 @@ import lombok.*;
 public class User1 {
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
 
 
 }
