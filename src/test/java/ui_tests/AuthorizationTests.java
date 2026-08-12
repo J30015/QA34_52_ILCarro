@@ -24,11 +24,13 @@ public class AuthorizationTests extends AppManager {
     }
     @Test
     public void authorizationPositiveTest(){
+        User1 user = positiveUser();
+        System.out.println(user);
        // int i = new Random().nextInt(1000); если меняются данные
-        User1 user = User1.builder()
-                .username("victor19802710@gmail.com")
-                .password("4tzNnQrGn96S!!4")
-                .build();
+//        User1 user = User1.builder()
+//                .username("victor19802710@gmail.com")
+//                .password("4tzNnQrGn96S!!4")
+             //   .build();
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginForm(user);
         loginPage.clickBtnYalla();
