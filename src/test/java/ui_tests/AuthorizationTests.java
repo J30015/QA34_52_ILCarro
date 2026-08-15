@@ -48,7 +48,7 @@ public class AuthorizationTests extends AppManager {
     public void loginNegativeTest2(){
         int i = new Random().nextInt(1000);
         User1 user = User1.builder()
-                .username("victor19802610@gmail.com")
+                .username(getProperty("base.properties","email"))
                 .password(getProperty("base.properties","password"))
                 .build();
         LoginPage loginPage = new LoginPage(getDriver());
@@ -57,10 +57,32 @@ public class AuthorizationTests extends AppManager {
         //Assert.assertTrue(loginPage.isLoginFailedAlertPresent());
     }
     @Test
+    public void loginNegativeWrongEmailTest() {
+        User1 user = User1.builder()
+                .username("ima_simonova370@gmail.com")
+                .password(getProperty("base.properties",
+                        "password"))
+                .build();
+        loginPage.typeLoginForm(user);
+        loginPage.clickBtnYalla();
+        Assert.assertTrue(loginPage.isPopUpLoginFailedDisplayed());
+    }
+    @Test
+    public void loginNegativeWrongPasswordTest() {
+        User1 user = User1.builder()
+                .username(getProperty("base.properties",
+                        "email"))
+                .password("SSas124!")
+                .build();
+        loginPage.typeLoginForm(user);
+        loginPage.clickBtnYalla();
+        Assert.assertTrue(loginPage.isPopUpLoginFailedDisplayed());
+    }
+    @Test
     public void loginPositiveTest(){
         User1 user = User1.builder()
-                .username("rima_simonova370@gmail.com")
-                .password("SSas124!")
+                .username(getProperty("base.properties","email"))
+                .password(getProperty("base.properties","password"))
                 .build();
         loginPage.typeLoginForm(user);
         loginPage.clickBtnYalla();
@@ -73,21 +95,53 @@ public class AuthorizationTests extends AppManager {
 
     }
     @Test
-    public void loginNegativeEmptyAllFieldsWithClickInFieldsTest(){
-        User1 user = User1.builder()
-                .username("")
-                .password("")
-                .build();
-        loginPage.typeLoginForm(user);
-        loginPage.clickBtnYalla();
-        softAssert.assertFalse(loginPage.isBtnYallaEnabled(),"validate isBtnYallaEnabled ");
-        System.out.println("test working");
-        softAssert.assertTrue(loginPage.isTextInErrorPresent("Email is required"),"validate message: Email is required");
 
-        softAssert.assertTrue(loginPage.isTextInErrorPresent("Password is required"),"validate message: Password is required");
-        softAssert.assertAll();
+        public void loginNegativeEmptyAllFieldsWithClickInFieldsTest() {
+            User1 user = User1.builder()
+                    .username("sima_simonova370@gmail.com")
+                    .password("BSas124!")
+                    .username("")
+                    .password("")
+                    .build();
+            LoginPage loginPage = new LoginPage(getDriver());
+            loginPage.typeLoginForm(user);
+            loginPage.clickBtnYalla();
+            softAssert.assertFalse(loginPage.isBtnYallaEnabled(),
+                    "validate isBtnYallaEnabled()");
+            System.out.println("test working");
+            softAssert.assertTrue(loginPage.isTextInErrorPresent("Email is required"),
+                    "validate message: Email is required");
+            softAssert.assertTrue(loginPage.isTextInErrorPresent("Password is required"),
+                    "validate message: Password is required");
+            softAssert.assertAll();
+        }
 
-    }
+        @Test
+    public void loginNegativeEmptyEmailFieldTest(){
+            User1 user = User1.builder()
+                    .username("")
+                    .password("ZZcv@lk.com")
+                    .build();
+            LoginPage loginPage = new LoginPage(getDriver());
+            loginPage.typeLoginForm(user);
+            loginPage.clickBtnYalla();
+            softAssert.assertTrue(loginPage.isTextInErrorPresent("Email is required"),
+                    "validate message: Email is required");
+
+        }
+        @Test
+    public void loginNegativeEmptyPasswordFieldTest(){
+            User1 user = User1.builder()
+                    .username("vVkfg@bh.com")
+                    .password("")
+                    .build();
+            LoginPage loginPage = new LoginPage(getDriver());
+            loginPage.typeLoginForm(user);
+            loginPage.clickBtnYalla();
+            softAssert.assertTrue(loginPage.isTextInErrorPresent("Password is required"),
+                    "validate message: Password is required");
+
+        }
 
     }
 
