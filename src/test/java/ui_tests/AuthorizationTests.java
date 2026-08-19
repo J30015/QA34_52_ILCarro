@@ -1,5 +1,6 @@
 package ui_tests;
 
+import data_providers.UserDataProvider;
 import dto.User1;
 import manager.AppManager;
 import org.openqa.selenium.By;
@@ -182,6 +183,9 @@ public class AuthorizationTests extends AppManager {
 
         softAssert.assertAll();
     }
+
+
+
 
 }
 
