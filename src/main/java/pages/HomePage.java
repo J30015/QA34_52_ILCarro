@@ -20,6 +20,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//div[@class='header']/a[6]")
     WebElement btnLogin;
 
+
     public void clickBtnLogin() {
         btnLogin.click();
     }

@@ -29,6 +29,7 @@ public abstract class BasePage {
     }
 
 
+
     public boolean isTextInElementPresent(WebElement element, String text){
         try{  return new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions

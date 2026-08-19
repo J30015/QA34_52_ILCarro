@@ -3,13 +3,16 @@ package ui_tests;
 import data_providers.UserDataProvider;
 import dto.User1;
 import manager.AppManager;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.PopUpPage;
 import pages.RegistrationPage;
 
 import static utils.PropertiesReader.getProperty;
+import static utils.UserFactory.*;
 
 public class RegistrationTests extends AppManager {
     RegistrationPage registrationPage;
@@ -23,20 +26,23 @@ public class RegistrationTests extends AppManager {
 
     @Test
     public void registrationPositiveTest() {
+        User1 user = positiveUser();
 
-        User1 user = User1.builder()
-                .firstName("Jamily")
-                .lastName("Kasimova")
-                .username("jkasimova80@gmail.com")
-                .password("Ff2$Ss2$")
-                .build();
+//        User1 user = User1.builder()
+//                .firstName("Jamily")
+//                .lastName("Kasimova")
+//                .username("jkasimova80@gmail.com")
+//                .password("Ff2$Ss2$")
+//                .build();
 
 
         registrationPage.typeRegistrationForm(user);
-        registrationPage.clickCheckBox();
-        registrationPage.clickBtnYalla();
+        registrationPage.clickCheckboxTermsOfUse();
+       registrationPage.clickBtnYalla();
+        Assert.assertTrue(new PopUpPage(getDriver())
+                .isTextInPopUpMessagePresent("You are logged in success"));
     }
-    @Test(dataProvider = "dataProviderWrongPasswordOrEmail",dataProviderClass = UserDataProvider.class)
+    @Test(dataProvider = "dataProviderForRegistrationWrongPasswordOrEmail",dataProviderClass = UserDataProvider.class)
     public void registrationNegativeWrongPasswordTest(User1 user){
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBox();

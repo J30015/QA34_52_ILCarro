@@ -12,7 +12,7 @@ public class UserFactory {
                 .lastName(faker.name().lastName())
                 .username(faker.internet().emailAddress())
                 .password(PropertiesReader.getProperty
-                        ("base.properties","password_for_registration"))
+                        ("base.properties","password"))
                 .build();
 
         return user;

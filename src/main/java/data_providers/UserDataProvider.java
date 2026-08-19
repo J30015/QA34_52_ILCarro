@@ -14,16 +14,18 @@ import java.util.List;
 
 public class UserDataProvider {
     @DataProvider
-    public Iterator<User1> dataProviderWrongPasswordOrEmail() {
+    public Iterator<User1> dataProviderForRegistrationWrongPasswordOrEmail() {
         List<User1> list = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader
-                (new FileReader("src/main/resources/wrong_email_or_password"))) {
+                (new FileReader("src/test/resources/wrong_email_or_password.csv"))) {
             String line = bufferedReader.readLine();
             while (line != null) {
                 String[] splitLine = line.split(",");
                 list.add(User1.builder()
-                        .username(splitLine[0])
-                        .password(splitLine[1]).build());
+                        .firstName(splitLine[0])
+                        .lastName(splitLine[1])
+                        .username(splitLine[2])
+                        .password(splitLine[3]).build());
                 line = bufferedReader.readLine();
             }
 
