@@ -31,11 +31,14 @@ public class HomePage extends BasePage {
     public void clickBtnLogOut() {
         btnLogOut.click();
     }
+
     @FindBy(xpath = "//a[@href='/registration?url=%2Fsearch']")
     WebElement btnSignUp;
-    public void clickBtnSignUp(){
+
+    public void clickBtnSignUp() {
         btnSignUp.click();
     }
+
 
 }
 

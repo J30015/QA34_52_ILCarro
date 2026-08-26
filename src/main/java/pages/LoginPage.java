@@ -17,6 +17,7 @@ public class LoginPage extends BasePage {
         PageFactory.initElements
                 (new AjaxElementLocatorFactory(driver, 10), this);
     }
+
     @FindBy(xpath = "//label[@for='email']")
     WebElement fieldEmail;
 
@@ -33,6 +34,15 @@ public class LoginPage extends BasePage {
     WebElement popUpSuccessLogin;
     @FindBy(xpath = "//h1[text()='Login failed']")
     WebElement popUpLoginFailed;
+    @FindBy(xpath = "//button[@class='positive-button ng-star-inserted']")
+    WebElement btnOk;
+    @FindBy(xpath = "//a[@id='1']")
+    WebElement btnLetCarWork;
+
+    public void clickBtnLetCarWork() {
+        btnLetCarWork.click();
+    }
+
 
     public void typeLoginForm(User1 user) {
         inputEmail.sendKeys(user.getUsername());
@@ -43,7 +53,13 @@ public class LoginPage extends BasePage {
 
     public void clickBtnYalla() {
         btnYalla.click();
+
     }
+
+    public void clickBtnOk() {
+        btnOk.click();
+    }
+
     public boolean isEmailAndPasswordFilled() {
         String email = fieldEmail.getText();
         String password = fieldPassword.getText();
@@ -61,18 +77,22 @@ public class LoginPage extends BasePage {
         alert.findElement(By.xpath("//button[@type='button']")).click();
         return text.contains("Login failed");
     }
+
     public void closeHtmlAlert() {
         WebElement okButton = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='button']")));
         okButton.click();
     }
-    public boolean isPopUpSuccessLoginDisplayed(){
+
+    public boolean isPopUpSuccessLoginDisplayed() {
         return isElementDisplayed(popUpSuccessLogin);
     }
-    public boolean isPopUpLoginFailedDisplayed(){
+
+    public boolean isPopUpLoginFailedDisplayed() {
         return isElementDisplayed(popUpSuccessLogin);
     }
-    public boolean isBtnYallaEnabled(){
+
+    public boolean isBtnYallaEnabled() {
         return btnYalla.isEnabled();
     }
 }

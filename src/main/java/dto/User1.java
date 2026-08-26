@@ -15,6 +15,7 @@ public class User1 {
     private String password;
     private String firstName;
     private String lastName;
+    private String location;
 
 
 }

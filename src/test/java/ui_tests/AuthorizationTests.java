@@ -37,9 +37,11 @@ public class AuthorizationTests extends AppManager {
                 .username(getProperty("base.properties", "email"))
                 .password(getProperty("base.properties", "password"))
                 .build();
-        LoginPage loginPage = new LoginPage(getDriver());
+
         loginPage.typeLoginForm(user);
         loginPage.clickBtnYalla();
+        loginPage.clickBtnOk();
+
     }
 
     @Test
@@ -150,10 +152,11 @@ public class AuthorizationTests extends AppManager {
                 "validate message: Password is required");
 
     }
+
     @Test
     public void loginNegativeEmptyFieldPasswordTest() {
         User1 user = User1.builder()
-                .username(getProperty("base.properties","email"))
+                .username(getProperty("base.properties", "email"))
                 .password("")
                 .build();
         LoginPage loginPage = new LoginPage(getDriver());
@@ -166,11 +169,12 @@ public class AuthorizationTests extends AppManager {
                 "validate message: Password is required");
         softAssert.assertAll();
     }
+
     @Test
     public void loginNegativeEmptyFieldEmailTest() {
         User1 user = User1.builder()
                 .username("")
-                .password(getProperty("base.properties","password"))
+                .password(getProperty("base.properties", "password"))
                 .build();
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.typeLoginForm(user);
@@ -183,8 +187,6 @@ public class AuthorizationTests extends AppManager {
 
         softAssert.assertAll();
     }
-
-
 
 
 }
