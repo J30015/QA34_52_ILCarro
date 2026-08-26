@@ -75,18 +75,6 @@ public class LetTheCarWork extends BasePage {
 
     }
 
-    public void clickFields() {
-        manufacture.click();
-        model.click();
-        year.click();
-        fuel.click();
-        seats.click();
-        car_class.click();
-        number.click();
-        price.click();
-        textAbout.click();
-
-    }
 
     private void typesOfFuel(String[] types) {
         fuel.sendKeys(types);

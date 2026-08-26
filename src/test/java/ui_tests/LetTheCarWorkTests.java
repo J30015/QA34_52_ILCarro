@@ -54,7 +54,6 @@ public class LetTheCarWorkTests extends AppManager {
                 .price("85000")
                 .textAbout("Хорошее состояни.Один владелец." +
                         "Регулярное обслуживание").build();
-        letTheCarWork.clickFields();
         letTheCarWork.typeDetailsCar(car);
         letTheCarWork.clickBtnSubmitWithJS();
         Assert.assertTrue(letTheCarWork.isPopUpCarAddingFailedDisplayed());
