@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,23 +9,26 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.enums.HeaderMenu;
 
 import java.time.Duration;
 import java.util.List;
 
 public abstract class BasePage {
     static WebDriver driver;
-  public   Logger logger = LoggerFactory.getLogger(BasePage.class);
+    public Logger logger = LoggerFactory.getLogger(BasePage.class);
 
-    public void setDriver(WebDriver wd){
+    public void setDriver(WebDriver wd) {
         driver = wd;
     }
+
     @FindBy(xpath = "//div[@class='error']")
     List<WebElement> listErrors;
-    public boolean isTextInErrorPresent(String text){
-        if(listErrors == null || listErrors.isEmpty())
+
+    public boolean isTextInErrorPresent(String text) {
+        if (listErrors == null || listErrors.isEmpty())
             return false;
-        for (WebElement element: listErrors){
+        for (WebElement element : listErrors) {
             if (element.getText().contains(text))
                 return true;
         }
@@ -32,14 +36,53 @@ public abstract class BasePage {
     }
 
 
+    public void clickWait(WebElement element) {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
 
-    public boolean isTextInElementPresent(WebElement element, String text){
-        try{  return new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions
-                        .textToBePresentInElement(element, text));} catch (RuntimeException e) {
+    public <T extends BasePage> T clickHeaderButtons(HeaderMenu item){
+        new WebDriverWait(driver,Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath(item.getLocator()))).click();
+        switch (item){
+            case LOGO ->{
+               return(T) new HomePage(driver);
+            }
+            case SEARCH ->{
+                return(T) new HomePage(driver);
+            }
+            case LOGOUT ->{
+                return(T) new HomePage(driver);
+            }
+            case LET_THE_CAR_WORK ->{
+                return(T) new LetTheCarWork(driver);
+            }
+            case TERMS_OF_USE ->{
+                return(T) new TermsOfUsePage(driver);
+            }case SIGN_UP ->{
+                return(T) new RegistrationPage(driver);
+            }
+            case LOGIN ->{
+                return(T) new LoginPage(driver);
+            }
+            case DELETE_ACCOUNT->{
+                return(T) new PopUpPage(driver);
+            }
+            default -> throw new IllegalArgumentException("Wrong item");
+
+        }
+    }
+
+
+    public boolean isTextInElementPresent(WebElement element, String text) {
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions
+                            .textToBePresentInElement(element, text));
+        } catch (RuntimeException e) {
 //            e.printStackTrace();
 //            System.out.println("created exeption");
-            logger.error("created exeption",e);
+            logger.error("created exeption", e);
         }
         return false;
 
@@ -47,14 +90,13 @@ public abstract class BasePage {
     }
 
 
-    public String closeAlert(){
-        Alert alert = new WebDriverWait(driver,Duration.ofSeconds(5))
+    public String closeAlert() {
+        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.alertIsPresent());
         String text = alert.getText();
         alert.accept();
         return text;
     }
-
 
 
     public void pause(int time) {
@@ -65,12 +107,9 @@ public abstract class BasePage {
 
         }
     }
-    public boolean isElementDisplayed(WebElement element){
-        return  element.isDisplayed();
-    }
-    public void clickWait(WebElement element) {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(element)).click();
+
+    public boolean isElementDisplayed(WebElement element) {
+        return element.isDisplayed();
     }
 
 

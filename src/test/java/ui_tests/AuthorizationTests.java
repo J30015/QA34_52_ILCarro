@@ -6,16 +6,21 @@ import manager.AppManager;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.LoginPage;
+import utils.RetryAnalyzer;
+import utils.TestNGListener;
 import utils.UserFactory;
 
 import static utils.UserFactory.*;
 import static utils.PropertiesReader.*;
 
 import java.util.Random;
+
+@Listeners(TestNGListener.class)
 
 public class AuthorizationTests extends AppManager {
     LoginPage loginPage;
@@ -170,7 +175,7 @@ public class AuthorizationTests extends AppManager {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void loginNegativeEmptyFieldEmailTest() {
         User1 user = User1.builder()
                 .username("")

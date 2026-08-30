@@ -57,6 +57,7 @@ public class LoginPage extends BasePage {
     }
 
     public void clickBtnOk() {
+//       clickWait(btnOk);
         btnOk.click();
     }
 
