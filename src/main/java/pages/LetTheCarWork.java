@@ -43,8 +43,33 @@ public class LetTheCarWork extends BasePage {
     WebElement btnSubmit;
     @FindBy(xpath = "//div[@class='dialog-container']")
     WebElement popUpCarAddingFailed;
-@FindBy(id ="photos")
-WebElement inputImage;
+    @FindBy(id = "photos")
+    WebElement inputImage;
+    @FindBy(xpath = "//h2[@class='message']")
+    WebElement popUpTextMessage;
+
+    @FindBy(xpath = "//div[text()=' Wrong address ']")
+    WebElement wrongAddressMessage;
+    @FindBy(xpath = "//div[text()=' Make is required ']")
+    WebElement makeRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Model is required ']")
+    WebElement modelRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Year required ']")
+    WebElement yearRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Fuel is required ']")
+    WebElement fuelRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Number of seats is required ']")
+    WebElement seatsRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Car class is required ']")
+    WebElement carClassRequiredMessage;
+    @FindBy(xpath = "//div[text()='Car registration number is required']")
+    WebElement numberRequiredMessage;
+    @FindBy(xpath = "//div[text()=' Price is required ']")
+    WebElement priceRequiredMessage;
+    @FindBy(xpath = "//textarea[@placeholder='About (max 500 chars)']")
+    WebElement aboutMessage;
+    @FindBy(xpath = "//h2[@class='message']")
+    WebElement messageModelAbs;
 
 
     public void clickBtnSubmitWithJS() {
@@ -52,13 +77,19 @@ WebElement inputImage;
         js.executeScript("document.querySelector(\"button[type='submit']\").removeAttribute('disabled')");
         clickWait(btnSubmit);
     }
-    private void chooseFuel(Fuel fuel){
+
+    public void clickBtnSubmit() {
+        btnSubmit.click();
+    }
+
+    private void chooseFuel(Fuel fuel) {
         inputFuel.click();
         driver.findElement(By.xpath(fuel.getLocator())).click();
 
     }
-    public void downLoadImage(String fileName){
-        inputImage.sendKeys(new File("src/test/resources/"+ fileName).getAbsolutePath());
+
+    public void downLoadImage(String fileName) {
+        inputImage.sendKeys(new File("src/test/resources/" + fileName).getAbsolutePath());
 
     }
 
@@ -96,23 +127,92 @@ WebElement inputImage;
     public boolean isPopUpCarAddingFailedDisplayed() {
         return isElementDisplayed(popUpCarAddingFailed);
     }
-    public void typeAddNewCarForm(Car car){
+
+    public boolean isPopUpTextMessageDisplayed() {
+        return isElementDisplayed(popUpTextMessage);
+    }
+
+    public boolean isWrongAddressMessageDisplayed() {
+        return isElementDisplayed(wrongAddressMessage);
+    }
+
+    public boolean isMakeRequiredMessageDisplayed() {
+        return isElementDisplayed(makeRequiredMessage);
+    }
+
+    public boolean isModelRequiredMessageDisplayed() {
+        return isElementDisplayed(modelRequiredMessage);
+    }
+
+    public boolean isYearRequiredMessageDisplayed() {
+        return isElementDisplayed(yearRequiredMessage);
+    }
+
+    public boolean isFuelRequiredMessageDisplayed() {
+        return isElementDisplayed(fuelRequiredMessage);
+    }
+
+    public boolean isSeatsRequiredMessageDisplayed() {
+        return isElementDisplayed(seatsRequiredMessage);
+    }
+
+    public boolean isCarClassRequiredMessageDisplayed() {
+        return isElementDisplayed(carClassRequiredMessage);
+    }
+
+    public boolean isNumberRequiredMessageDisplayed() {
+        return isElementDisplayed(numberRequiredMessage);
+    }
+
+    public boolean isPriceRequiredMessageDisplayed() {
+        return isElementDisplayed(priceRequiredMessage);
+    }
+
+    public boolean isAboutMessageDisplayed() {
+        return isElementDisplayed(aboutMessage);
+    }
+
+    public void typeAddNewCarForm(Car car) {
         location.sendKeys(car.getCity());
         manufacture.sendKeys(car.getManufacture());
         model.sendKeys(car.getModel());
         year.sendKeys(car.getYear());
         chooseFuel(car.getFuel());
-       // seats.sendKeys(car.getSeats().toString()); любой вариант правильный
+        // seats.sendKeys(car.getSeats().toString()); любой вариант правильный
         //seats.sendKeys(String.valueOf(car.getSeats()));
-       // seats.sendKeys(car.getSeats()+"");
+        // seats.sendKeys(car.getSeats()+"");
         seats.sendKeys(Integer.toString(car.getSeats()));
         car_class.sendKeys(car.getCarClass());
         inputSerialNumber.sendKeys(car.getSerialNumber());
         price.sendKeys(Double.toString(car.getPricePerDay()));
         textAbout.sendKeys(car.getAbout());
 
+    }
 
+    public void typeAddNewCarFormWithoutModelType(Car car) {
+        location.sendKeys(car.getCity());
+        manufacture.sendKeys(car.getManufacture());
+        model.click();
+        year.sendKeys(car.getYear());
+        chooseFuel(car.getFuel());
+        seats.sendKeys(Integer.toString(car.getSeats()));
+        car_class.sendKeys(car.getCarClass());
+        inputSerialNumber.sendKeys(car.getSerialNumber());
+        price.sendKeys(Double.toString(car.getPricePerDay()));
+        textAbout.sendKeys(car.getAbout());
 
+    }
 
+    public void clickAddNewCarForm() {
+        location.click();
+        manufacture.click();
+        model.click();
+        year.click();
+        inputFuel.click();
+        seats.click();
+        car_class.click();
+        inputSerialNumber.click();
+        price.click();
+        textAbout.click();
     }
 }

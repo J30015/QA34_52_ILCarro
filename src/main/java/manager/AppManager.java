@@ -25,7 +25,7 @@ public class AppManager {
         logger.info("Start testing with method -->" + method.getName());
 
     }
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void tearDown(){
         if(driver != null){
             driver.quit();

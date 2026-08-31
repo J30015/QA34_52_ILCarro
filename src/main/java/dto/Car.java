@@ -1,4 +1,5 @@
 package dto;
+
 import lombok.*;
 import utils.enums.Fuel;
 
@@ -21,7 +22,7 @@ public class Car {
 //    private String textAbout;
 
 
-private String serialNumber ;
+    private String serialNumber;
     private String manufacture;
     private String model;
     private String year;
@@ -31,8 +32,6 @@ private String serialNumber ;
     private Double pricePerDay;
     private String about;
     private String city;
-
-
 
 
 }

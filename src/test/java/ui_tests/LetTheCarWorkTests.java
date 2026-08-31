@@ -1,5 +1,6 @@
 package ui_tests;
 
+import data_providers.CarDataProvider;
 import dto.Car;
 import dto.User1;
 import enums.TypesOfFuel;
@@ -7,12 +8,14 @@ import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.LetTheCarWork;
 import pages.LoginPage;
 import pages.PopUpPage;
 import utils.CarFactory;
 import utils.enums.HeaderMenu;
+
 import static utils.CarFactory.*;
 import static utils.PropertiesReader.getProperty;
 
@@ -21,6 +24,7 @@ public class LetTheCarWorkTests extends AppManager {
 
     LoginPage loginPage;
     LetTheCarWork letTheCarWork;
+    SoftAssert softAssert = new SoftAssert();
 
     User1 user;
 
@@ -53,7 +57,8 @@ public class LetTheCarWorkTests extends AppManager {
         letTheCarWork.clickBtnSubmitWithJS();
         Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("{\"city\":\"must not be blank\"}"));
 
-//        User1 user = User1.builder().location("Rishon Lizion").build();
+
+//      User1 user = User1.builder().location("Rishon Lizion").build();
 //        letTheCarWork.typeAddress(user);
 //        letTheCarWork.clickBtnPopOk();
 //        Car car = Car.builder()
@@ -71,11 +76,95 @@ public class LetTheCarWorkTests extends AppManager {
 //        letTheCarWork.clickBtnSubmitWithJS();
 //        Assert.assertTrue(letTheCarWork.isPopUpCarAddingFailedDisplayed());
 //
-//    }
-        // Homework Negative Tests
+    }
+
+
+    // Homework Negative Tests
 // 1. only click btn Submit
 // 2. click all fields and btnSubmit
 // 3. leave one field blank and other fields type with valid data
 // 4. wrong year
+
+
+    @Test
+    public void clickBtnSubmitNegativeTest() {
+        letTheCarWork.clickBtnSubmitWithJS();
+        softAssert.assertTrue(letTheCarWork.isPopUpCarAddingFailedDisplayed(),
+                "validate message: PopUpCarAddingFailedDisplayed");
+        softAssert.assertTrue(letTheCarWork.isPopUpTextMessageDisplayed(),
+                "validate message:PopUpTextMessageDisplayed");
+        softAssert.assertAll();
+
     }
+
+    @Test
+    public void clickAllFieldsBtnSubmitWithJSNegativeTest() {
+        letTheCarWork.clickAddNewCarForm();
+        letTheCarWork.clickBtnSubmitWithJS();
+        softAssert.assertTrue(letTheCarWork.isPopUpCarAddingFailedDisplayed(),
+                "validate message: PopUpCarAddingFailedDisplayed");
+        softAssert.assertTrue(letTheCarWork.isPopUpTextMessageDisplayed(),
+                "validate message:PopUpTextMessageDisplayed");
+        softAssert.assertAll();
+
+    }
+
+    @Test
+    public void clickAllFieldsBtnSubmitWithoutJSNegativeTest() {
+        letTheCarWork.clickAddNewCarForm();
+        letTheCarWork.clickBtnSubmit();
+        softAssert.assertTrue(letTheCarWork.isWrongAddressMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isMakeRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isModelRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isYearRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isFuelRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isSeatsRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isCarClassRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isNumberRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isPriceRequiredMessageDisplayed());
+        softAssert.assertTrue(letTheCarWork.isAboutMessageDisplayed());
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void typeLetTheCarWorkNegativeOneFieldEmptyClickBtnSubmitWithJSTest() {
+        Car car = positiveCar();
+        System.out.println(car);
+        letTheCarWork.typeAddNewCarFormWithoutModelType(car);
+        letTheCarWork.downLoadImage("img.png");
+        letTheCarWork.clickBtnSubmitWithJS();
+        softAssert.assertTrue(letTheCarWork.isModelRequiredMessageDisplayed());
+        softAssert.assertTrue(new PopUpPage(getDriver())
+                .isTextInPopUpMessagePresent("{\"city\":\"must not be blank\",\"model\":\"must not be blank\"}"));
+        softAssert.assertAll();
+    }
+
+
+    @Test
+    public void typeLetTheCarWorkNegativeOneFieldEmptyClickBtnSubmitWithoutJSTest() {
+        Car car = positiveCar();
+        System.out.println(car);
+        letTheCarWork.typeAddNewCarFormWithoutModelType(car);
+        letTheCarWork.downLoadImage("img.png");
+        letTheCarWork.clickBtnSubmit();
+        Assert.assertTrue(letTheCarWork.isModelRequiredMessageDisplayed());
+    }
+
+    @Test(dataProvider = "dataProviderForTypeLetTheCarWorkWrongYear", dataProviderClass = CarDataProvider.class)
+    public void typeLetTheCarWorkWrongYearTest(Car car) {
+        letTheCarWork.typeAddNewCarForm(car);
+        letTheCarWork.downLoadImage("img.png");
+        letTheCarWork.clickBtnSubmitWithJS();
+
+    }
+
+    @Test(dataProvider = "dataProviderForTypeLetTheCarWorkWrongYear", dataProviderClass = CarDataProvider.class)
+    public void typeLetTheCarWorkWrongYearAndClickBtnSubmitWithoutJSTest(Car car) {
+        letTheCarWork.typeAddNewCarForm(car);
+        letTheCarWork.downLoadImage("img.png");
+        letTheCarWork.clickBtnSubmit();
+
+    }
+
+
 }
