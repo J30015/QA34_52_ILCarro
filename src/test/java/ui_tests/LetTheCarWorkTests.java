@@ -16,6 +16,8 @@ import pages.PopUpPage;
 import utils.CarFactory;
 import utils.enums.HeaderMenu;
 
+import java.time.LocalDate;
+
 import static utils.CarFactory.*;
 import static utils.PropertiesReader.getProperty;
 
@@ -51,6 +53,7 @@ public class LetTheCarWorkTests extends AppManager {
     public void typeLetTheCarWorkTest() {
 //        Car car = CarFactory.positiveCar();
         Car car = positiveCar();
+
         System.out.println(car);
         letTheCarWork.typeAddNewCarForm(car);
         letTheCarWork.downLoadImage("img.png");
@@ -166,5 +169,32 @@ public class LetTheCarWorkTests extends AppManager {
 
     }
 
+    @Test
+    public void typeLetTheCarWorkNegativeWrongYearTest() {
+//        Car car = CarFactory.positiveCar();
+        Car car = positiveCar();
+        car.setYear(String.valueOf(LocalDate.now().getYear() + 1));
+        System.out.println(car);
+        letTheCarWork.typeAddNewCarForm(car);
+        letTheCarWork.downLoadImage("img.png");
+        Assert.assertTrue(letTheCarWork.isTextInErrorPresent("Wrong year"));
 
+        //letTheCarWork.clickBtnSubmitWithJS();
+        //Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("{\"city\":\"must not be blank\"}"));
+
+
+    }
+
+    @Test
+    public void typeLetTheCarWorkNegativeWrongYearNotDigitTest() {
+
+        Car car = positiveCar();
+        car.setYear("a");
+        car.setYear(String.valueOf(LocalDate.now().getYear() + 1));
+        System.out.println(car);
+        letTheCarWork.typeAddNewCarForm(car);
+        letTheCarWork.downLoadImage("img.png");
+        Assert.assertTrue(letTheCarWork.isTextInErrorPresent("Year required"));
+
+    }
 }
