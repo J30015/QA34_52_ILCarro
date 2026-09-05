@@ -1,9 +1,7 @@
 package ui_tests;
 
-import data_providers.UserDataProvider;
 import dto.User1;
 import manager.AppManager;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -13,9 +11,7 @@ import pages.HomePage;
 import pages.LoginPage;
 import utils.RetryAnalyzer;
 import utils.TestNGListener;
-import utils.UserFactory;
 
-import static utils.UserFactory.*;
 import static utils.PropertiesReader.*;
 
 import java.util.Random;

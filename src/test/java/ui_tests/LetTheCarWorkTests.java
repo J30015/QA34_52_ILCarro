@@ -7,6 +7,7 @@ import enums.TypesOfFuel;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.HomePage;
@@ -14,12 +15,15 @@ import pages.LetTheCarWork;
 import pages.LoginPage;
 import pages.PopUpPage;
 import utils.CarFactory;
+import utils.TestNGListener;
 import utils.enums.HeaderMenu;
 
 import java.time.LocalDate;
 
 import static utils.CarFactory.*;
+
 import static utils.PropertiesReader.getProperty;
+@Listeners(TestNGListener.class)
 
 
 public class LetTheCarWorkTests extends AppManager {
