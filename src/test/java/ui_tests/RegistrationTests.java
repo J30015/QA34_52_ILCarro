@@ -13,6 +13,7 @@ import pages.RegistrationPage;
 import utils.TestNGListener;
 
 import static utils.UserFactory.*;
+
 @Listeners(TestNGListener.class)
 public class RegistrationTests extends AppManager {
     RegistrationPage registrationPage;
@@ -50,7 +51,7 @@ public class RegistrationTests extends AppManager {
         registrationPage.clickCheckBoxWithActions();
         registrationPage.clickBtnYalla();
         Assert.assertTrue(registrationPage.isTextInErrorPresent("Password must contain 1 uppercase letter, 1 lowercase letter," +
-                 "1 number and one special symbol of [@$#^&*!])"));
+                "1 number and one special symbol of [@$#^&*!])"));
 
     }
 

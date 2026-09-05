@@ -1,5 +1,7 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,7 +44,32 @@ public class HomePage extends BasePage {
     WebElement inputDates;
     @FindBy(xpath = "//button[@type='submit']")
     WebElement btnYalla;
-    public void typeSearchForm(String city, LocalDate startDate,LocalDate endDate){
+    @FindBy(xpath = "//div[@class='error']")
+    WebElement messageErrorCity;
+    @FindBy(xpath = "//div[@class='error']/div[1]")
+    WebElement messageInvalidDateFirst;
+    @FindBy(xpath = "//div[@class='error']/div[2]")
+    WebElement messageInvalidDateSecond;
+    @FindBy(xpath = "//div[@class='error']/div[3]")
+    WebElement messageInvalidDateThird;
+    @FindBy(xpath = "//div[@class='ng-star-inserted']")
+    WebElement messageDateRequired;
+    @FindBy(xpath = "//button[@class='dismissButton']")
+    WebElement popUpBtnOk;
+
+    public void clickPopUpBtnOk() {
+        popUpBtnOk.click();
+    }
+
+    public void typeCityOnly(String city) {
+        inputCity.sendKeys(city);
+    }
+
+    public void onlyClickFieldDate() {
+        inputDates.click();
+    }
+
+    public void typeSearchForm(String city, LocalDate startDate, LocalDate endDate) {
         inputCity.sendKeys(city);
         System.out.println(startDate);
         System.out.println(endDate);
@@ -50,14 +77,46 @@ public class HomePage extends BasePage {
         // 9/4/2026 - 9/10/2026
         System.out.println(startDate.getMonthValue());
         System.out.println(startDate.getDayOfMonth());
-        String dates = startDate.getMonthValue()+"/"+startDate.getDayOfMonth()+"/"+startDate.getYear()+" - "
-                +endDate.getMonthValue()+"/"+endDate.getDayOfMonth()+"/"+endDate.getYear();
+        String dates = startDate.getMonthValue() + "/" + startDate.getDayOfMonth() + "/" + startDate.getYear() + " - "
+                + endDate.getMonthValue() + "/" + endDate.getDayOfMonth() + "/" + endDate.getYear();
         System.out.println(dates);
         inputDates.sendKeys(dates);
     }
 
+    public void clickBtnYalla() {
+        btnYalla.click();
+    }
+
     public void clickBtnSignUp() {
         btnSignUp.click();
+    }
+
+    public boolean isYallaButtonEnabled() {
+        return btnYalla.isEnabled();
+    }
+
+    public boolean isMessageErrorCityDisplayed() {
+        return isElementDisplayed(messageErrorCity);
+    }
+
+    public boolean isMessageFirstInvalidDateDisplayed() {
+        return isElementDisplayed(messageInvalidDateFirst);
+    }
+
+    public boolean isMessageSecondInvalidDateDisplayed() {
+        return isElementDisplayed(messageInvalidDateSecond);
+    }
+
+    public boolean isMessageThirdInvalidDateDisplayed() {
+        return isElementDisplayed(messageInvalidDateThird);
+    }
+
+    public boolean isMessageDateRequiredDisplayed() {
+        return isElementDisplayed(messageDateRequired);
+    }
+
+    public boolean isErrorMessagePresent() {
+        return !driver.findElements(By.xpath("//div[@class='ng-star-inserted']")).isEmpty();
     }
 
 
