@@ -19,14 +19,14 @@ public class RegistrationTests extends AppManager {
     RegistrationPage registrationPage;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToRegistrationPage() {
         logger.info("Start registration test");
         new HomePage(getDriver()).clickBtnSignUp();
         registrationPage = new RegistrationPage(getDriver());
     }
 
-    @Test
+    @Test(groups = {"smoke","regress","user","positive"})
     public void registrationPositiveTest() {
         User1 user = positiveUser();
 

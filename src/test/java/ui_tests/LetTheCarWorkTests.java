@@ -34,7 +34,7 @@ public class LetTheCarWorkTests extends AppManager {
 
     User1 user;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToLetTheCarWorkPage() {
         User1 user = User1.builder()
                 .username(getProperty("base.properties", "email"))
@@ -53,7 +53,7 @@ public class LetTheCarWorkTests extends AppManager {
 
     }
 
-    @Test
+    @Test(groups = {"smoke","regress","car","positive"})
     public void typeLetTheCarWorkTest() {
 //        Car car = CarFactory.positiveCar();
         Car car = positiveCar();
