@@ -36,8 +36,8 @@ public class AppManager {
         } else if (browser.equals(Browser.EDGE.browserName())) {
             driver = new EdgeDriver();
         }
-        //  driver.manage().window().maximize();
-        driver.manage().window().setSize(new Dimension(1920, 1080));
+          driver.manage().window().maximize();
+        //driver.manage().window().setSize(new Dimension(1920, 1080));
 
         logger.info("Start testing with method -->" + method.getName());
         WDListener webDriverListener = new WDListener();
