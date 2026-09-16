@@ -24,7 +24,7 @@ public class SearchTests extends AppManager {
         homePage = new HomePage(getDriver());
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void searchCarPositiveTest() {
         String city = "Haifa";
         LocalDate startDate = LocalDate.now().plusDays(2);
@@ -156,5 +156,23 @@ public class SearchTests extends AppManager {
         Assert.assertFalse(homePage.isDateClickable(endDate));
     }
 
+    @Test
+    public void searchCarNegativeSameStartAndEndDatesTest() {
+        String city = "Haifa";
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now();
+        homePage.typeSearchForm(city, startDate, endDate);
+        Assert.assertFalse(homePage.isTextInErrorPresent("You can't book car for less than a day"));
 
+    }
+
+    @Test
+    public void searchCarWithCalendarDateLessTodayNegativeTest() {
+        String city = "Haifa";
+        LocalDate startDate = LocalDate.now().minusDays(2);
+        LocalDate endDate = LocalDate.now().plusDays(3);
+        homePage.typeSearchForm(city, startDate, endDate);
+        homePage.clickBtnSubmitWithJS();
+
+    }
 }
